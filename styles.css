@@ -17,6 +17,9 @@
   grid-column: 1 / span 4;
   margin-bottom: -50px;
   height: 120px;
+  font-size: 550%;
+  text-align: right;
+  padding: 0 10px 0 10px;
 }
 
 .key {
