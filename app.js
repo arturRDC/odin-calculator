@@ -133,6 +133,9 @@ function pressKey(id) {
             updateDisplay();
             break;
         case 'dot':
+            if (displayValue.includes('.')) {
+                break;
+            }
             displayValue += '.';
             updateDisplay();
             break;
