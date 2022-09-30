@@ -28,12 +28,6 @@ function divide(a, b) {
     return a / b;
 }
 
-function sqrt(a) {
-    if (a < 0) return 'No real value';
-    return Math.sqrt(a);
-}
-
-
 function operate(operator, a, b) {
     return operator(a,b);
 }
@@ -142,7 +136,6 @@ function pressKey(id) {
             updateDisplay();
             break;
         case 'equals':
-            // performOperation();
             operandB = Number(displayValue);
             operandA = operate(this.currentOperation, operandA, operandB);
             displayValue = String(operandA);
@@ -156,10 +149,5 @@ function pressKey(id) {
 }
 
 
-
-
 let keys = document.querySelectorAll('.key');
-// let oneKey = document.querySelector('#one');
-// oneKey.addEventListener('click',()=> pressKey('one'));
-
 keys.forEach(key => key.addEventListener('click',()=> pressKey(key.id)));
