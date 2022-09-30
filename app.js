@@ -101,6 +101,7 @@ function pressKey(id) {
         case 'division':
             currentOperation = divide;
             performOperation();
+            if (displayValue === 'Error') displayValue = '';
             break;
         case 'subtraction':
             currentOperation = subtract;
@@ -140,6 +141,7 @@ function pressKey(id) {
             operandA = operate(this.currentOperation, operandA, operandB);
             displayValue = String(operandA);
             updateDisplay();
+            displayValue = '';
             operandB = null;
             operandA = null;
             break;
