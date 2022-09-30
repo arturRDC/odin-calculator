@@ -23,7 +23,7 @@ function multiply(a, b) {
 // Divides two numbers
 function divide(a, b) {
     if (b === 0) {
-        return 'Cannot divide by zero';
+        return 'Error';
     }
     return a / b;
 }
