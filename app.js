@@ -22,8 +22,17 @@ function multiply(a, b) {
 
 // Divides two numbers
 function divide(a, b) {
+    if (b === 0) {
+        return 'Cannot divide by zero';
+    }
     return a / b;
 }
+
+function sqrt(a) {
+    if (a < 0) return 'No real value';
+    return Math.sqrt(a);
+}
+
 
 function operate(operator, a, b) {
     return operator(a,b);
@@ -31,8 +40,23 @@ function operate(operator, a, b) {
 
 
 function updateDisplay() {
-    this.displayElement.textContent = displayValue;
+    this.displayElement.textContent = displayValue.substring(0,7);
 }
+
+function performOperation() {
+    if (!operandA) {
+        operandA = Number(displayValue);
+        displayValue = '';
+    } else if (!operandB) {
+        operandB = Number(displayValue);
+        operandA = operate(this.currentOperation, operandA, operandB);
+        displayValue = String(operandA);
+        updateDisplay();
+        displayValue = '';
+        operandB = null;
+    }
+}
+
 
 function pressKey(id) {
     switch (id) {
@@ -78,26 +102,39 @@ function pressKey(id) {
             break;
         case 'addition':
             currentOperation = add;
-            operandA = Number(displayValue);
-            displayValue = '';
+            performOperation();
             break;
         case 'division':
             currentOperation = divide;
-            operandA = Number(displayValue);
-            displayValue = '';
+            performOperation();
             break;
         case 'subtraction':
             currentOperation = subtract;
-            operandA = Number(displayValue);
-            displayValue = '';
+            performOperation();
             break;
         case 'multiplication':
             currentOperation = multiply;
-            operandA = Number(displayValue);
-            displayValue = '';
+            performOperation();
             break;
         case 'ac':
             displayValue = '';
+            updateDisplay();     
+            currentOperation = null;
+            operandA = null;
+            operandB = null;
+            break;
+        case 'sign':
+            operandA = operandA || Number(displayValue);
+            operandA = -1 * (operandA);
+            displayValue = operandA.toString();
+            operandA = null;
+            updateDisplay();
+            break;
+        case 'percentage':
+            operandA = operandA || Number(displayValue);
+            operandA = 0.01 * (operandA);
+            displayValue = operandA.toString();
+            operandA = null;
             updateDisplay();
             break;
         case 'dot':
@@ -105,10 +142,13 @@ function pressKey(id) {
             updateDisplay();
             break;
         case 'equals':
+            // performOperation();
             operandB = Number(displayValue);
-            displayValue = String(operate(currentOperation, operandA, operandB));
+            operandA = operate(this.currentOperation, operandA, operandB);
+            displayValue = String(operandA);
             updateDisplay();
-            displayValue = '';
+            operandB = null;
+            operandA = null;
             break;
         default:
             break;
